@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linsu.proj.mapper.WorkMapper">
+
+    <resultMap type="Work" id="WorkResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="workMonth"    column="work_month"    />
+        <result property="workDays"    column="work_days"    />
+        <result property="workYear"    column="work_year"    />
+        <result property="remark"    column="remark"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectWorkVo">
+        select w.id, w.user_id, w.project_id, w.work_month, w.work_days, w.work_year, w.remark, w.update_time, w.create_time, w.update_by, w.create_by from b_work w
+    </sql>
+
+    <select id="selectWorkList" parameterType="Work" resultType="com.linsu.proj.domain.Work">
+        select w.id, w.user_id, w.project_id, w.work_month, w.work_days, w.work_year, w.remark, w.update_time, w.create_time, w.update_by, w.create_by ,p.project_name, u.nick_name
+        from b_work w
+        left join b_project p on w.project_id=p.id
+        left join sys_user u on w.user_id=u.user_id
+        <where>
+            <if test="workYear != null "> and w.work_year = #{workYear}</if>
+             <if test="userId != null and userId != ''"> and w.user_id=#{userId}</if>
+             <if test="projectId != null and projectId != ''"> and w.project_id=#{projectId}</if>
+             <if test="workMonth != null and workMonth != ''"> and w.work_month=#{workMonth}</if>
+        </where>
+    </select>
+
+    <select id="selectWorkById" parameterType="Long" resultMap="WorkResult">
+        <include refid="selectWorkVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWork" parameterType="Work" useGeneratedKeys="true" keyProperty="id">
+        insert into b_work
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="projectId != null">project_id,</if>
+            <if test="workMonth != null">work_month,</if>
+            <if test="workDays != null">work_days,</if>
+            <if test="workYear != null">work_year,</if>
+            <if test="remark != null">remark,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="projectId != null">#{projectId},</if>
+            <if test="workMonth != null">#{workMonth},</if>
+            <if test="workDays != null">#{workDays},</if>
+            <if test="workYear != null">#{workYear},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWork" parameterType="Work">
+        update b_work
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="workMonth != null">work_month = #{workMonth},</if>
+            <if test="workDays != null">work_days = #{workDays},</if>
+            <if test="workYear != null">work_year = #{workYear},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <select id="checkUnique" resultMap="WorkResult">
+        <include refid="selectWorkVo"/>
+        where user_id=#{userId} and project_id=#{projectId} and work_year=#{workYear} and work_month = #{month}
+    </select>
+    <select id="listByYear" resultType="com.linsu.proj.vo.WorkVo">
+        SELECT
+            w.project_id,
+            p.project_no,
+            w.user_id,
+            p.project_name,
+            u.nick_name,
+            max(case when work_month = 1 then work_days else 0 end) as hours_1,
+            max(case when work_month = 2 then work_days else 0 end) as hours_2,
+            max(case when work_month = 3 then work_days else 0 end) as hours_3,
+            max(case when work_month = 4 then work_days else 0 end) as hours_4,
+            max(case when work_month = 5 then work_days else 0 end) as hours_5,
+            max(case when work_month = 6 then work_days else 0 end) as hours_6,
+            max(case when work_month = 7 then work_days else 0 end) as hours_7,
+            max(case when work_month = 8 then work_days else 0 end) as hours_8,
+            max(case when work_month = 9 then work_days else 0 end) as hours_9,
+            max(case when work_month = 10 then work_days else 0 end) as hours_10,
+            max(case when work_month = 11 then work_days else 0 end) as hours_11,
+            max(case when work_month = 12 then work_days else 0 end) as hours_12,
+            sum(work_days) as total
+        FROM
+            b_work w
+                left join b_project p on w.project_id=p.id
+        left join sys_user u on w.user_id=u.user_id
+        <where>
+            <if test="workYear != null "> and w.work_year = #{workYear}</if>
+            <if test="userId != null and userId != ''"> and w.user_id=#{userId}</if>
+            <if test="projectId != null and projectId != ''"> and w.project_id=#{projectId}</if>
+            <if test="workMonth != null and workMonth != ''"> and w.work_month=#{workMonth}</if>
+        </where>
+        group by w.project_id,p.project_no, w.user_id,p.project_name,u.nick_name
+        order by p.project_no, w.user_id
+    </select>
+
+    <delete id="deleteWorkById" parameterType="Long">
+        delete from b_work where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkByIds" parameterType="String">
+        delete from b_work where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

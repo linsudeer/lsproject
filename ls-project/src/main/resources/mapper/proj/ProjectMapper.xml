@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linsu.proj.mapper.ProjectMapper">
+
+    <resultMap type="Project" id="ProjectResult">
+        <result property="id"    column="id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="manager"    column="manager"    />
+        <result property="managerName"    column="manager_name"    />
+        <result property="financialNo"    column="financial_no"    />
+        <result property="projectNo"    column="project_no"    />
+        <result property="projectType"    column="project_type"    />
+        <result property="projectCustom"    column="project_custom"    />
+        <result property="projectClass"    column="project_class"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectProjectVo">
+        select id, manager, project_name, financial_no, project_no, project_type, project_custom, project_class, status, remark, create_time, update_time, start_date, end_date, del_flag from b_project
+    </sql>
+
+    <select id="selectProjectList" parameterType="Project" resultMap="ProjectResult">
+        select p.id, p.manager, p.project_name, p.financial_no, p.project_no, p.project_type, p.project_custom, p.project_class, p.status, p.remark, p.create_time, p.update_time, p.start_date, p.end_date,
+        p.del_flag,u.nick_name as manager_name
+        from b_project p
+        left join sys_user u on p.manager=u.user_id
+        <where>
+            <if test="projectName != null  and projectName != ''"> and p.project_name like '%' || #{projectName} || '%'</if>
+            <if test="manager != null  and manager != ''"> and p.manager =  #{manager}</if>
+            <if test="projectType != null  and projectType != ''"> and p.project_type = #{projectType}</if>
+            <if test="projectClass != null  and projectClass != ''"> and p.project_class = #{projectClass}</if>
+            <if test="projectClass != null  and projectClass != ''"> and p.project_class = #{projectClass}</if>
+            <if test="status != null "> and p.status = #{status}</if>
+             and p.del_flag=0
+        </where>
+    </select>
+
+    <select id="selectProjectById" parameterType="Long" resultMap="ProjectResult">
+        <include refid="selectProjectVo"/>
+        where id = #{projectNo}
+    </select>
+    <select id="selectProjectByNo" resultType="com.linsu.proj.domain.Project">
+        <include refid="selectProjectVo"/>
+        where project_no = #{id}
+    </select>
+
+    <insert id="insertProject" parameterType="Project" useGeneratedKeys="true" keyProperty="id">
+        insert into b_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">project_name,</if>
+            <if test="manager != null">manager,</if>
+            <if test="financialNo != null">financial_no,</if>
+            <if test="projectNo != null">project_no,</if>
+            <if test="projectType != null">project_type,</if>
+            <if test="projectCustom != null">project_custom,</if>
+            <if test="projectClass != null">project_class,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">#{projectName},</if>
+            <if test="manager != null">#{manager},</if>
+            <if test="financialNo != null">#{financialNo},</if>
+            <if test="projectNo != null">#{projectNo},</if>
+            <if test="projectType != null">#{projectType},</if>
+            <if test="projectCustom != null">#{projectCustom},</if>
+            <if test="projectClass != null">#{projectClass},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProject" parameterType="Project">
+        update b_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="manager != null">manager = #{manager},</if>
+            <if test="financialNo != null">financial_no = #{financialNo},</if>
+            <if test="projectNo != null">project_no = #{projectNo},</if>
+            <if test="projectType != null">project_type = #{projectType},</if>
+            <if test="projectCustom != null">project_custom = #{projectCustom},</if>
+            <if test="projectClass != null">project_class = #{projectClass},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProjectById" parameterType="Long">
+        update b_project set del_flag=2 where id = #{id}
+    </delete>
+
+    <delete id="deleteProjectByIds" parameterType="String">
+        update b_project set del_flag=2 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
