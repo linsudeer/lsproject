@@ -28,6 +28,44 @@
 16. 缓存监控：对系统的缓存信息查询，命令统计等。
 17. 在线构建器：拖动表单元素生成相应的HTML代码。
 18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+19. 项目管理：记录项目基本信息，项目经理，项目成本，已消耗工时，完成进度等。
+20. 任务管理：项目经理可在这里新建任务，记录当前项目完成情况。
+21. 工时记录：记录每个员工每一个月在项目中的工时消耗情况。
+22. 工时统计：按员工+项目维度统计一年的工时
+23. 个人总结：根据项目工时消耗情况，以及任务分析并统计个人的工作情况，主要用于个人年终总结 TODO ;
+24：工时实时记录客户端：后面会开发桌面客户端，智能实时记录项目工作状态，并根据工作习惯统计工时 TODO。
+
 
 
 ## 图例
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/b8a78725-0124-4f07-af56-5da6b856e506)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/88a78802-2af7-496d-80fe-59f7bb44ac73)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/3615ec56-57d4-472a-884c-ec0b799c8c98)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/abe77ac4-1c70-4288-9fb4-91adb57ee377)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/ac8d7ba0-acd7-4684-ac39-eb10193cee9f)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/7a39da68-329a-4315-b467-8f840e745ba7)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/ddf3d9f5-f376-4a42-8ee1-b4c4e889070c)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/71e9c720-a2f3-4c9c-af50-0dc971c1060e)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/88ba29ca-7c64-47ff-ae4b-3db0c4b026b6)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/f28e0d30-d33b-4dc7-b04b-1f2d11f89f47)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/c02c8fd6-a290-4ccc-8bd3-574356bb13e0)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/c6b50afb-7ea7-4bb6-9b01-c84b8f0ad9cb)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/b386ac12-10b0-40f0-967e-1e894081acc8)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/8ccb9581-8a3c-4029-a435-eb3e32f66aef)
+
+![image](https://github.com/linsudeer/lsproject/assets/20902466/f410c343-835c-4882-967d-00cbe202f659)
+
