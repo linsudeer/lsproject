@@ -80,7 +80,6 @@
 
     <el-table v-loading="loading" :data="workList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="年度" align="center" prop="workYear" />
       <el-table-column label="员工" align="center" prop="nickname" />
       <el-table-column label="项目" align="center" prop="projectName" />
       <el-table-column label="月份" align="center" prop="workMonth" />
@@ -104,20 +103,24 @@
     <!-- 添加或修改工时记录对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="workRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
+        <el-form-item label="年度" prop="workYear">
+          <el-input v-model="form.workYear" placeholder="请输入工时年度" />
         </el-form-item>
-        <el-form-item label="项目id" prop="projectId">
-          <el-input v-model="form.projectId" placeholder="请输入项目id" />
+        <el-form-item label="项目" prop="projectId">
+          <el-select v-model="form.projectId"  filterable placeholder="项目">
+            <el-option
+                v-for="dict in projectList"
+                :key="dict.id"
+                :label="dict.projectName"
+                :value="dict.id"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="月份" prop="workMonth">
           <el-input v-model="form.workMonth" placeholder="请输入月份" />
         </el-form-item>
         <el-form-item label="工作天数" prop="workDays">
           <el-input v-model="form.workDays" placeholder="请输入工作天数" />
-        </el-form-item>
-        <el-form-item label="工时年度" prop="workYear">
-          <el-input v-model="form.workYear" placeholder="请输入工时年度" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />

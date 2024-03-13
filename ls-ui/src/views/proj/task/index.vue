@@ -109,8 +109,8 @@
       <el-table-column label="项目名称" align="center" width="200" prop="projectName" show-overflow-tooltip />
       <el-table-column label="所属人" align="center" prop="nickName" />
       <el-table-column label="任务名称" align="center" width="200" prop="taskName" show-overflow-tooltip />
-      <el-table-column label="预估工时" align="center" prop="predictHours" />
-      <el-table-column label="实际工时" align="center" prop="realityHours" />
+      <el-table-column label="预估工时(h)" align="center" prop="predictHours" />
+      <el-table-column label="实际工时(h)" align="center" prop="realityHours" />
       <el-table-column label="开始时间" align="center" prop="startTime" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
@@ -145,7 +145,7 @@
 
     <!-- 添加或修改任务对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="taskRef" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="taskRef" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="任务名称" prop="taskName">
           <el-input v-model="form.taskName" type="text" placeholder="请输入任务名称" maxlength="200" />
         </el-form-item>
@@ -185,11 +185,11 @@
             placeholder="请选择结束时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="预估工时" prop="predictHours">
-          <el-input-number precision="1" step="0.5" v-model="form.predictHours" placeholder="请输入预估工时" />
+        <el-form-item label="预估工时(h)" prop="predictHours">
+          <el-input-number precision="1" step="0.5" v-model="form.predictHours" placeholder="请输入预估工时(h)" />
         </el-form-item>
-        <el-form-item label="实际工时" prop="realityHours">
-          <el-input-number precision="1" step="0.5" v-model="form.realityHours" placeholder="请输入实际工时" />
+        <el-form-item label="实际工时(h)" prop="realityHours">
+          <el-input-number precision="1" step="0.5" v-model="form.realityHours" placeholder="请输入实际工时(h)" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
